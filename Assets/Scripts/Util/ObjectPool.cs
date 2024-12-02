@@ -28,22 +28,25 @@ public class ObjectPool : MonoBehaviour
 
 	public PooledObject GetPool(Vector3 position, Quaternion rotation)
 	{
+		PooledObject instance;
+
 		if (objectPool.Count > 0)
 		{
-			PooledObject instance = objectPool.Pop();
+			instance = objectPool.Pop();
 			instance.transform.position = position;
 			instance.transform.rotation = rotation;
 			instance.gameObject.SetActive(true);
-			return instance;
 		}
 		else
 		{
-			PooledObject instance = Instantiate(prefab);
+			instance = Instantiate(prefab);
 			instance.Pool = this;
 			instance.transform.position = position;
 			instance.transform.rotation = rotation;
-			return instance;
 		}
+
+		instance.Render.sprite = prefab.Render.sprite;
+		return instance;
 	}
 
 	public void ReturnPool(PooledObject instance)

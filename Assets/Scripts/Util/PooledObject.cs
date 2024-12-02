@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PooledObject : MonoBehaviour
 {
+	[SerializeField] SpriteRenderer render;
+	public SpriteRenderer Render { get { return render; } set { render = value; } }
 	[SerializeField] bool autoRelease;
 	[SerializeField] float releaseTime;
 

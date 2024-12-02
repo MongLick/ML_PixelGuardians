@@ -15,18 +15,24 @@ public class GameManager : Singleton<GameManager>
 	[SerializeField] int waveNumber;
 	public int WaveNumber { get { return waveNumber; } set { waveNumber = value; } }
 
-	[SerializeField] List<PooledObject> monsterPrefabs;
+	[SerializeField] PooledObject monsterPrefabs;
+	[SerializeField] List<Sprite> monsterSprites;
 
 	public void StartGame()
 	{
-		Manager.Pool.CreatePool(monsterPrefabs[waveNumber], 15, 30);
-
+		Manager.Pool.CreatePool(monsterPrefabs, 15, 30);
 		StartWave();
 	}
 
 	public void StartWave()
 	{
+		ChangeMonsterSprites();
 		StartCoroutine(SpawnMonster());
+	}
+
+	private void ChangeMonsterSprites()
+	{
+		monsterPrefabs.Render.sprite = monsterSprites[waveNumber];
 	}
 
 	private IEnumerator SpawnMonster()
@@ -35,7 +41,7 @@ public class GameManager : Singleton<GameManager>
 		while (currentMonsterCount > 0)
 		{
 			currentMonsterCount--;
-			PooledObject monster = Manager.Pool.GetPool(monsterPrefabs[waveNumber], wayPoints[0].position, Quaternion.identity);
+			PooledObject monster = Manager.Pool.GetPool(monsterPrefabs, wayPoints[0].position, Quaternion.identity);
 			yield return new WaitForSeconds(spawnDelay);
 		}
 
