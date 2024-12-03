@@ -5,6 +5,7 @@ public class GameScene : BaseScene
 {
 	[Header("Components")]
 	[SerializeField] Transform[] wayPoints;
+	[SerializeField] TowerTile[] towerTiles;
 
 	private void OnEnable()
 	{
@@ -14,6 +15,7 @@ public class GameScene : BaseScene
 	private void GameManagerSetUp()
 	{
 		Manager.Game.WayPoints = wayPoints;
+		Manager.Game.TowerTiles = towerTiles;
 		Manager.Game.StartGame();
 	}
 

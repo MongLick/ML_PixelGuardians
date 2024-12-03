@@ -7,6 +7,10 @@ public class GameManager : Singleton<GameManager>
 	[Header("Components")]
 	[SerializeField] Transform[] wayPoints;
 	public Transform[] WayPoints { get { return wayPoints; } set { wayPoints = value; } }
+	[SerializeField] TowerTile[] towerTile;
+	public TowerTile[] TowerTiles { get { return towerTile; } set { towerTile = value; } }
+	[SerializeField] PooledObject monsterPrefabs;
+	[SerializeField] List<Sprite> monsterSprites;
 
 	[Header("Specs")]
 	[SerializeField] float spawnDelay;
@@ -14,9 +18,6 @@ public class GameManager : Singleton<GameManager>
 	[SerializeField] int currentMonsterCount;
 	[SerializeField] int waveNumber;
 	public int WaveNumber { get { return waveNumber; } set { waveNumber = value; } }
-
-	[SerializeField] PooledObject monsterPrefabs;
-	[SerializeField] List<Sprite> monsterSprites;
 
 	public void StartGame()
 	{
@@ -33,6 +34,22 @@ public class GameManager : Singleton<GameManager>
 	private void ChangeMonsterSprites()
 	{
 		monsterPrefabs.Render.sprite = monsterSprites[waveNumber];
+	}
+
+	public void ChangeTileColors(Color color)
+	{
+		foreach (TowerTile tile in towerTile)
+		{
+			tile.ChangeColor(color);
+		}
+	}
+
+	public void DisableAllTileOverlays()
+	{
+		foreach (TowerTile tile in towerTile)
+		{
+			tile.DisableImage();
+		}
 	}
 
 	private IEnumerator SpawnMonster()

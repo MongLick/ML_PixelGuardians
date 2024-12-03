@@ -1,9 +1,10 @@
 using UnityEngine;
 
-public class MonsterController : MonoBehaviour
+public class MonsterController : MonoBehaviour, IDamageable
 {
 	[Header("Components")]
 	[SerializeField] Transform[] wayPoints;
+	[SerializeField] MonsterData monsterData;
 
 	[Header("Specs")]
 	[SerializeField] float moveSpeed;
@@ -24,22 +25,22 @@ public class MonsterController : MonoBehaviour
 		{
 			if (direction.x > 0)
 			{
-				transform.rotation = Quaternion.Euler(0, 180, 0);
+				transform.rotation = Quaternion.Euler(0, 0, 0);
 			}
 			else
 			{
-				transform.rotation = Quaternion.Euler(0, 0, 0);
+				transform.rotation = Quaternion.Euler(0, 180, 0);
 			}
 		}
 		else 
 		{
 			if (direction.y > 0)
 			{
-				transform.rotation = Quaternion.Euler(0, 0, 0);
+				transform.rotation = Quaternion.Euler(0, 180, 0);
 			}
 			else
 			{
-				transform.rotation = Quaternion.Euler(0, 180, 0);
+				transform.rotation = Quaternion.Euler(0, 0, 0);
 			}
 		}
 
@@ -54,5 +55,10 @@ public class MonsterController : MonoBehaviour
 				currentWaypointIndex = 0;
 			}
 		}
+	}
+
+	public void TakeDamage(float damege)
+	{
+		monsterData.CurrentHealth -= damege;
 	}
 }

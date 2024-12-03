@@ -6,6 +6,7 @@ public static class Manager
 	public static PoolManager Pool { get { return PoolManager.Instance; } }
 	public static SceneManager Scene { get { return SceneManager.Instance; } }
 	public static SoundManager Sound { get { return SoundManager.Instance; } }
+	public static UIManager UI { get { return UIManager.Instance; }}
 
 	[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
 	private static void Initialize()
@@ -14,10 +15,12 @@ public static class Manager
 		PoolManager.ReleaseInstance();
 		SceneManager.ReleaseInstance();
 		SoundManager.ReleaseInstance();
+		UIManager.ReleaseInstance();	
 
 		GameManager.CreateInstance();
 		PoolManager.CreateInstance();
 		SceneManager.CreateInstance();
 		SoundManager.CreateInstance();
+		UIManager.CreateInstance();
 	}
 }
