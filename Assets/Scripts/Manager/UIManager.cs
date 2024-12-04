@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class UIManager : Singleton<UIManager>
 {
+	[Header("Components")]
+	[SerializeField] ButtonHandler buttonHandler;	
+	public ButtonHandler ButtonHandler { get { return buttonHandler; } set { buttonHandler = value; } }
+
 	[Header("Specs")]
 	private bool isSellTower;
 	public bool IsSellTower { get { return isSellTower; } set { isSellTower = value; } }

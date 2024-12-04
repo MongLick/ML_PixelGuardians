@@ -26,11 +26,19 @@ public class TowerSpawner : MonoBehaviour
 
 		if (towerPrefab != null)
 		{
-			GameObject newTower = Instantiate(towerPrefab, tileTransform.position, Quaternion.identity);
+			PooledObject towerPoolObject = Manager.Pool.GetPool(Manager.Game.TowerPrefab, tileTransform.position, Quaternion.identity);
+
+			Tower tower = towerPoolObject.GetComponent<Tower>();
+
+			if (tower != null)
+			{
+				tower.AddOrActivateTower(towerPrefab, tileTransform); 
+			}
+
 			TowerTile towerTile = tileTransform.GetComponent<TowerTile>();
 			if (towerTile != null)
 			{
-				towerTile.SetCurrentTower(newTower);
+				towerTile.SetCurrentTower(tower, towerPrefab.name);
 			}
 		}
 	}
@@ -43,33 +51,42 @@ public class TowerSpawner : MonoBehaviour
 
 			if (nextLevel > 0)
 			{
-				Destroy(tile1.CurrentTower);
-				Destroy(tile2.CurrentTower);
+				tile1.CurrentTower.ReturnTower();
+				tile2.CurrentTower.ReturnTower();
 
-				tile1.SetCurrentTower(null);
-				tile2.SetCurrentTower(null);
+				tile1.SetCurrentTower(null, "");
+				tile2.SetCurrentTower(null, "");
 
 				GameObject newTower = null;
+				PooledObject towerPoolObject = null;
 				switch (nextLevel)
 				{
 					case 2:
-						newTower = Instantiate(levelTwoTowers[Random.Range(0, levelTwoTowers.Length)], tile1.transform.position, Quaternion.identity);
-						Debug.Log(1);
+						newTower = levelTwoTowers[Random.Range(0, levelTwoTowers.Length)];
+						towerPoolObject = Manager.Pool.GetPool(Manager.Game.TowerPrefab, tile1.transform.position, Quaternion.identity);
 						break;
 					case 3:
-						newTower = Instantiate(levelThreeTowers[Random.Range(0, levelThreeTowers.Length)], tile1.transform.position, Quaternion.identity);
+						newTower = levelThreeTowers[Random.Range(0, levelThreeTowers.Length)];
+						towerPoolObject = Manager.Pool.GetPool(Manager.Game.TowerPrefab, tile1.transform.position, Quaternion.identity);
 						break;
 				}
-				tile1.SetCurrentTower(newTower);
+
+				Tower newTowerScript = towerPoolObject.GetComponent<Tower>();
+				if (newTowerScript != null)
+				{
+					newTowerScript.AddOrActivateTower(newTower, tile1.transform);
+				}
+
+				tile1.SetCurrentTower(newTowerScript, newTower.name);
 			}
 		}
 	}
 
 	private int GetNextLevel(string towerName)
 	{
-		if (towerName.Contains("_One"))
+		if (towerName.Contains("_Level1"))
 			return 2; 
-		if (towerName.Contains("_Two"))
+		if (towerName.Contains("_Level2"))
 			return 3; 
 		return 0;
 	}

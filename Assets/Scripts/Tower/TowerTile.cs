@@ -7,8 +7,8 @@ public class TowerTile : MonoBehaviour, IPointerClickHandler
 	[Header("Components")]
 	[SerializeField] TowerSpawner towerSpawner;
 	[SerializeField] Image overlayImage;
-	[SerializeField] GameObject currentTower;
-	public GameObject CurrentTower { get { return currentTower; } set { currentTower = value; } }
+	[SerializeField] Tower currentTower;
+	public Tower CurrentTower { get { return currentTower; } set { currentTower = value; } }
 	[SerializeField] Camera mainCamera;
 
 	[Header("Specs")]
@@ -79,7 +79,7 @@ public class TowerTile : MonoBehaviour, IPointerClickHandler
 	{
 		if (currentTower != null)
 		{
-			Destroy(currentTower);
+			currentTower.ReturnTower();
 			currentTower = null;
 			towerName = "";
 			isTowerPresent = false;
@@ -87,12 +87,12 @@ public class TowerTile : MonoBehaviour, IPointerClickHandler
 		}
 	}
 
-	public void SetCurrentTower(GameObject tower)
+	public void SetCurrentTower(Tower tower, string name)
 	{
 		if(tower != null)
 		{
 			currentTower = tower;
-			towerName = currentTower.name;
+			towerName = name;
 			isTowerPresent = true;
 		}
 		else

@@ -45,11 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wayPoints: []
-  spawnDelay: 1
-  monsterCount: 10
-  currentMonsterCount: 0
-  waveNumber: 0
-  monsterPrefabs: {fileID: 2089627505547909129, guid: 6a4c37d75f82b6f43bd939cc9ae092ad, type: 3}
+  towerTile: []
+  monsterPrefab: {fileID: 6103658546729267329, guid: dd47f49dcdd658d42bf465fbba8969f8, type: 3}
+  towerPrefab: {fileID: 5212764781495264361, guid: e44032918318fdb4b95414348660e67e, type: 3}
   monsterSprites:
   - {fileID: 21300000, guid: f4ba7a5e8b25ae241a6c94d4d6df858d, type: 3}
   - {fileID: 21300000, guid: 932ce8ce7b8fd8e4d9fb9bce6a7e0b7d, type: 3}
@@ -63,3 +61,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: d78e009f5bb799b42bbf3c801af824ac, type: 3}
   - {fileID: 21300000, guid: 7fd151f4d9de8de47a1d5abe6e506e83, type: 3}
   - {fileID: 21300000, guid: 764f930ba03e6324d805335eb66b8c98, type: 3}
+  spawnDelay: 1
+  monsterCount: 10
+  currentMonsterCount: 0
+  waveNumber: 0

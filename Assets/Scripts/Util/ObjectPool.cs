@@ -45,7 +45,11 @@ public class ObjectPool : MonoBehaviour
 			instance.transform.rotation = rotation;
 		}
 
-		instance.Render.sprite = prefab.Render.sprite;
+		if (instance.Render != null)
+		{
+			instance.Render.sprite = prefab.Render.sprite;
+		}
+
 		return instance;
 	}
 

@@ -5,6 +5,7 @@ public class MonsterController : MonoBehaviour, IDamageable
 	[Header("Components")]
 	[SerializeField] Transform[] wayPoints;
 	[SerializeField] MonsterData monsterData;
+	[SerializeField] PooledObject pooledObject;
 
 	[Header("Specs")]
 	[SerializeField] float moveSpeed;
@@ -60,5 +61,16 @@ public class MonsterController : MonoBehaviour, IDamageable
 	public void TakeDamage(float damege)
 	{
 		monsterData.CurrentHealth -= damege;
+		if(monsterData.CurrentHealth <= 0)
+		{
+			Die();
+		}
+	}
+
+	private void Die()
+	{
+		pooledObject.Pool.ReturnPool(pooledObject);
+		currentWaypointIndex = 0;
+		monsterData.CurrentHealth = monsterData.MaxHealth;
 	}
 }

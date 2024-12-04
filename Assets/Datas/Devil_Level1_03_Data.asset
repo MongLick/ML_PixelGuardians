@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97e96bc8971d501478a243994c526508, type: 3}
+  m_Name: Devil_Level1_03_Data
+  m_EditorClassIdentifier: 
+  towerName: Devil_Level1_03
+  damage: 4
+  range: 1
+  attackRate: 2.5
+  attackCoolTime: 0
+  builedCost: 100
+  sellCost: 50
