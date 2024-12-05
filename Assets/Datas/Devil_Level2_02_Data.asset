@@ -15,7 +15,6 @@ MonoBehaviour:
   towerName: Devil_Level2_02
   damage: 9
   range: 2
-  attackRate: 2
+  attackRate: 1.7
   attackCoolTime: 0
-  builedCost: 0
-  sellCost: 75
+  sellCost: 80

@@ -95,7 +95,7 @@ SpriteRenderer:
   m_SortingLayerID: -1857159581
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b8fd21ad16123364aaee0da8f1b3746b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2d5d6782fc427ad498ff00ded71060f4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -344,6 +344,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wayPoints: []
   monsterData: {fileID: 2727007887361204183}
+  monsterView: {fileID: 6868203647616058819}
   pooledObject: {fileID: 6103658546729267329}
   moveSpeed: 2
   reachDistance: 0.01
@@ -360,7 +361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e249f4905d4c2704e85904bf7cecf601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 20
+  maxHealth: 0
   currentHealth: 0
 --- !u!114 &6868203647616058819
 MonoBehaviour:

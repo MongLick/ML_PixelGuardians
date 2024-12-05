@@ -7,6 +7,7 @@ public class Tower : MonoBehaviour
 	[Header("Components")]
 	[SerializeField] PooledObject pooledObject;
     [SerializeField] List<GameObject> towerPrefabs = new List<GameObject>();
+	public List<GameObject> TowerPrefabs { get { return towerPrefabs; } }
 
     public void ReturnTower()
     {

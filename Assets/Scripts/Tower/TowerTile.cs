@@ -12,6 +12,8 @@ public class TowerTile : MonoBehaviour, IPointerClickHandler
 	[SerializeField] Camera mainCamera;
 
 	[Header("Specs")]
+	private const int BaseSellCost = 50;
+	private const int SellCostPerLevel = 30;
 	private Ray ray;
 	private RaycastHit hit;
 	private string towerName;
@@ -36,12 +38,7 @@ public class TowerTile : MonoBehaviour, IPointerClickHandler
 		}
 		else if (Manager.UI.IsSpawnTower && !isTowerPresent)
 		{
-			ray = mainCamera.ScreenPointToRay(eventData.position);
-			if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-			{
-				towerSpawner.SpawnTower(hit.transform, 1);
-				Manager.UI.IsSpawnTower = false;
-			}
+			HandleSpawnTower(eventData);
 		}
 		else if (Manager.UI.IsMergeTower && isTowerPresent)
 		{
@@ -51,19 +48,21 @@ public class TowerTile : MonoBehaviour, IPointerClickHandler
 		Manager.Game.DisableAllTileOverlays();
 	}
 
+	private void HandleSpawnTower(PointerEventData eventData)
+	{
+		ray = mainCamera.ScreenPointToRay(eventData.position);
+		if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+		{
+			towerSpawner.SpawnTower(hit.transform, 1);
+			Manager.UI.IsSpawnTower = false;
+		}
+	}
+
 	public void ChangeColor(Color color)
 	{
-		if (Manager.UI.IsSellTower && isTowerPresent)
-		{
-			overlayImage.gameObject.SetActive(true);
-			overlayImage.color = color;
-		}
-		else if (Manager.UI.IsSpawnTower && !isTowerPresent)
-		{
-			overlayImage.gameObject.SetActive(true);
-			overlayImage.color = color;
-		}
-		else if (Manager.UI.IsMergeTower && isTowerPresent)
+		if ((Manager.UI.IsSellTower && isTowerPresent) ||
+			(Manager.UI.IsSpawnTower && !isTowerPresent) ||
+			(Manager.UI.IsMergeTower && isTowerPresent))
 		{
 			overlayImage.gameObject.SetActive(true);
 			overlayImage.color = color;
@@ -77,40 +76,61 @@ public class TowerTile : MonoBehaviour, IPointerClickHandler
 
 	private void SellTower()
 	{
-		if (currentTower != null)
+		if (currentTower == null) return;
+
+		GameObject activeTower = currentTower.TowerPrefabs.Find(tower => tower.activeSelf);
+		if (activeTower != null)
 		{
-			currentTower.ReturnTower();
-			currentTower = null;
-			towerName = "";
-			isTowerPresent = false;
-			Manager.UI.IsSellTower = false;
+			int sellCost = CalculateSellCost(activeTower.name);
+			Manager.Data.Gold += sellCost;
 		}
+
+		ResetTileState();
+	}
+
+	private int CalculateSellCost(string towerName)
+	{
+		int level = ExtractLevelFromName(towerName);
+		return BaseSellCost + (level - 1) * SellCostPerLevel;
+	}
+
+	private int ExtractLevelFromName(string name)
+	{
+		string[] parts = name.Split('_');
+		foreach (string part in parts)
+		{
+			if (part.StartsWith("Level") && int.TryParse(part.Replace("Level", ""), out int level))
+			{
+				return level;
+			}
+		}
+		return 1;
+	}
+
+	private void ResetTileState()
+	{
+		currentTower.ReturnTower();
+		currentTower = null;
+		towerName = string.Empty;
+		isTowerPresent = false;
+		Manager.UI.IsSellTower = false;
 	}
 
 	public void SetCurrentTower(Tower tower, string name)
 	{
-		if(tower != null)
-		{
-			currentTower = tower;
-			towerName = name;
-			isTowerPresent = true;
-		}
-		else
-		{
-			currentTower = null;
-			towerName = "";
-			isTowerPresent = false;
-		}
+		currentTower = tower;
+		towerName = name;
+		isTowerPresent = tower != null;
 	}
 
 	private void MergeTower()
 	{
 		foreach (TowerTile towerTile in Manager.Game.TowerTiles)
 		{
-			if (towerTile != this && towerTile.isTowerPresent && towerTile.TowerName == this.TowerName)
+			if (towerTile != this && towerTile.isTowerPresent && towerTile.TowerName == TowerName)
 			{
 				towerSpawner.MergeTowers(this, towerTile);
-				break; 
+				break;
 			}
 		}
 	}

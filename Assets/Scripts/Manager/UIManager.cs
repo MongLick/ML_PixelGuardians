@@ -5,8 +5,12 @@ using UnityEngine;
 public class UIManager : Singleton<UIManager>
 {
 	[Header("Components")]
-	[SerializeField] ButtonHandler buttonHandler;	
-	public ButtonHandler ButtonHandler { get { return buttonHandler; } set { buttonHandler = value; } }
+	[SerializeField] TowerUI towerUI;	
+	public TowerUI TowerUI { get { return towerUI; } set { towerUI = value; } }
+	[SerializeField] UpgradeUI upgradeUI;
+	public UpgradeUI UpgradeUI { get {return upgradeUI; } set {upgradeUI = value; } }
+	[SerializeField] VictoryUI victoryUI;
+	public VictoryUI VictoryUI { get { return victoryUI; } set { victoryUI = value; } }
 
 	[Header("Specs")]
 	private bool isSellTower;

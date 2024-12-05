@@ -9,19 +9,19 @@ public class MonsterView : MonoBehaviour
 
 	private void OnEnable()
 	{
-		InitializeHealthBar();
-		monsterData.OnHealthCanged += UpdateView;
+		monsterData.OnHealthChanged += UpdateView;
 	}
 
 	private void OnDisable()
 	{
-		monsterData.OnHealthCanged -= UpdateView;
+		monsterData.OnHealthChanged -= UpdateView;
 	}
 
-	private void InitializeHealthBar()
+	public void Initialize(MonsterData data)
 	{
+		monsterData = data;
 		healthBar.maxValue = monsterData.MaxHealth;
-		healthBar.value = monsterData.MaxHealth;
+		healthBar.value = monsterData.CurrentHealth;
 	}
 
 	private void UpdateView(float value)

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
@@ -13,13 +14,13 @@ public class GameManager : Singleton<GameManager>
 	[SerializeField] PooledObject towerPrefab;
 	public PooledObject TowerPrefab { get { return towerPrefab; } set { towerPrefab = value; } }
 	[SerializeField] List<Sprite> monsterSprites;
+	[SerializeField] int[] monsterHealth;
 
 	[Header("Specs")]
+	private const int stagegold = 300;
 	[SerializeField] float spawnDelay;
 	[SerializeField] int monsterCount;
 	[SerializeField] int currentMonsterCount;
-	[SerializeField] int waveNumber;
-	public int WaveNumber { get { return waveNumber; } set { waveNumber = value; } }
 
 	public void StartGame()
 	{
@@ -30,13 +31,13 @@ public class GameManager : Singleton<GameManager>
 
 	public void StartWave()
 	{
-		ChangeMonsterSprites();
+		ChangeMonster();
 		StartCoroutine(SpawnMonster());
 	}
 
-	private void ChangeMonsterSprites()
+	private void ChangeMonster()
 	{
-		monsterPrefab.Render.sprite = monsterSprites[waveNumber];
+		monsterPrefab.Render.sprite = monsterSprites[Manager.Data.StageNumber -1];
 	}
 
 	public void ChangeTileColors(Color color)
@@ -49,7 +50,7 @@ public class GameManager : Singleton<GameManager>
 
 	public void DisableAllTileOverlays()
 	{
-		Manager.UI.ButtonHandler.CurrentActionChange();
+		Manager.UI.TowerUI.CurrentActionChange();
 		foreach (TowerTile tile in towerTile)
 		{
 			tile.DisableImage();
@@ -58,16 +59,25 @@ public class GameManager : Singleton<GameManager>
 
 	private IEnumerator SpawnMonster()
 	{
-		currentMonsterCount = monsterCount;
+        currentMonsterCount = monsterCount;
 		while (currentMonsterCount > 0)
 		{
 			currentMonsterCount--;
-			PooledObject monster = Manager.Pool.GetPool(monsterPrefab, wayPoints[0].position, Quaternion.identity);
+			Manager.Data.CurrentMonsterCount++;
+			PooledObject monsterObject = Manager.Pool.GetPool(monsterPrefab, wayPoints[0].position, Quaternion.identity);
+
+			MonsterController monster = monsterObject.GetComponent<MonsterController>();
+			if (monster != null)
+			{
+				monster.Initialize(monsterHealth[Manager.Data.StageNumber -1]);
+			}
+
 			yield return new WaitForSeconds(spawnDelay);
 		}
 
 		yield return new WaitForSeconds(3f);
-		waveNumber++;
+		Manager.Data.StageNumber++;
+		Manager.Data.Gold += stagegold;
 		StartWave();
 	}
 }

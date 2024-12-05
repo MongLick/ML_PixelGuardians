@@ -15,7 +15,6 @@ MonoBehaviour:
   towerName: Human_Level2_03
   damage: 9
   range: 2
-  attackRate: 1.8
+  attackRate: 1.5
   attackCoolTime: 0
-  builedCost: 0
-  sellCost: 75
+  sellCost: 80

@@ -1,3 +1,4 @@
+using System.Threading;
 using UnityEngine;
 
 public class MonsterController : MonoBehaviour, IDamageable
@@ -5,6 +6,7 @@ public class MonsterController : MonoBehaviour, IDamageable
 	[Header("Components")]
 	[SerializeField] Transform[] wayPoints;
 	[SerializeField] MonsterData monsterData;
+	[SerializeField] MonsterView monsterView;
 	[SerializeField] PooledObject pooledObject;
 
 	[Header("Specs")]
@@ -72,5 +74,12 @@ public class MonsterController : MonoBehaviour, IDamageable
 		pooledObject.Pool.ReturnPool(pooledObject);
 		currentWaypointIndex = 0;
 		monsterData.CurrentHealth = monsterData.MaxHealth;
+		Manager.Data.CurrentMonsterCount--;
+	}
+
+	public void Initialize(float maxHealth)
+	{
+		monsterData.Initialize(maxHealth);
+		monsterView.Initialize(monsterData);
 	}
 }

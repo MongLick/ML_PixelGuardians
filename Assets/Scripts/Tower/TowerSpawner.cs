@@ -7,8 +7,23 @@ public class TowerSpawner : MonoBehaviour
 	[SerializeField] GameObject[] levelTwoTowers; 
 	[SerializeField] GameObject[] levelThreeTowers;
 
+	[Header("Specs")]
+	[SerializeField] int spawnGold;
+
 	public void SpawnTower(Transform tileTransform, int towerLevel)
 	{
+		if (towerLevel == 1)
+		{
+			if (Manager.Data.Gold >= spawnGold)
+			{
+				Manager.Data.Gold -= spawnGold;
+			}
+			else
+			{
+				return;
+			}
+		}
+
 		GameObject towerPrefab = null;
 
 		switch (towerLevel)
