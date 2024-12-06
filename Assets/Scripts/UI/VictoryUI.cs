@@ -15,6 +15,7 @@ public class VictoryUI : MonoBehaviour
 
 	private void GameEnd()
 	{
+		Time.timeScale = 1f;
 		Manager.Scene.LoadScene("TitleScene");
 	}
 }

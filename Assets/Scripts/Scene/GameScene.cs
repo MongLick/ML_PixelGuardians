@@ -16,11 +16,12 @@ public class GameScene : BaseScene
 	{
 		Manager.Game.WayPoints = wayPoints;
 		Manager.Game.TowerTiles = towerTiles;
+		Manager.Data.StartGame();
 		Manager.Game.StartGame();
 	}
 
 	public override IEnumerator LoadingRoutine()
 	{
-		throw new System.NotImplementedException();
+		yield return null;
 	}
 }

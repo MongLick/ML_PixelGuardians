@@ -36,9 +36,9 @@ public class SoundManager : Singleton<SoundManager>
 
 	public void StopSFX()
 	{
-		if (sfxSource.isPlaying == false)
+		/*if (sfxSource.isPlaying == false)
 			return;
 
-		sfxSource.Stop();
+		sfxSource.Stop();*/
 	}
 }

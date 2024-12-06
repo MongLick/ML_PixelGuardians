@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -25,9 +23,10 @@ public class DataManager : Singleton<DataManager>
 	private UnityAction onMonsterCountChanged;
 	public UnityAction OnMonsterCountChanged { get { return onMonsterCountChanged; } set { onMonsterCountChanged = value; } }
 
+	[Header("Components")]
+	[SerializeField] GameData gameData;
+
 	[Header("Specs")]
-	private const int initialGold = 400;
-	private const int initialStage = 1;
 	[SerializeField] float devilAttackDamage;
 	public float DevilAttackDamage { get { return devilAttackDamage; } set { devilAttackDamage = value; onDevilDataChanged?.Invoke(); } }
 	[SerializeField] float devilAttackSpeed;
@@ -59,9 +58,22 @@ public class DataManager : Singleton<DataManager>
 	[SerializeField] int priceIncreaseAmount;
 	public int PriceIncreaseAmount { get { return priceIncreaseAmount; } set { priceIncreaseAmount = value; } }
 
-	private void Start()
+	public void StartGame()
 	{
-		gold += initialGold;
-		stageNumber = initialStage;
+		devilAttackDamage = gameData.devilAttackDamage;
+		devilAttackSpeed = gameData.devilAttackSpeed;
+		humanAttackDamage = gameData.humanAttackDamage;
+		humanAttackSpeed = gameData.humanAttackSpeed;
+		towerDamage = gameData.towerDamage;
+		towerSpeed = gameData.towerSpeed;
+		gold = gameData.gold;
+		stageNumber = gameData.stageNumber;
+		currentMonsterCount = gameData.currentMonsterCount;
+		maxMonsterCount = gameData.maxMonsterCount;
+		devilDamagePrice = gameData.devilDamagePrice;
+		devilSpeedPrice = gameData.devilSpeedPrice;
+		humanDamagePrice = gameData.humanDamagePrice;
+		humanSpeedPrice = gameData.humanSpeedPrice;
+		priceIncreaseAmount = gameData.priceIncreaseAmount;
 	}
 }

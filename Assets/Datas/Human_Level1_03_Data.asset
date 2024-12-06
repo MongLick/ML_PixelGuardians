@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: Human_Level1_03_Data
   m_EditorClassIdentifier: 
   towerName: Human_Level1_03
-  damage: 7
+  damage: 7.5
   range: 1
   attackRate: 3.7
   attackCoolTime: 0
-  sellCost: 50

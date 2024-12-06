@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 285453b6108031d4995a0646044375ff, type: 3}
+  m_Name: GameData
+  m_EditorClassIdentifier: 
+  devilAttackDamage: 0
+  devilAttackSpeed: 0
+  humanAttackDamage: 0
+  humanAttackSpeed: 0
+  towerDamage: 1.5
+  towerSpeed: 0.1
+  gold: 400
+  stageNumber: 1
+  currentMonsterCount: 0
+  maxMonsterCount: 30
+  devilDamagePrice: 50
+  devilSpeedPrice: 50
+  humanDamagePrice: 50
+  humanSpeedPrice: 50
+  priceIncreaseAmount: 20

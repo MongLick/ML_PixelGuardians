@@ -6,7 +6,6 @@ using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
 public class SceneManager : Singleton<SceneManager>
 {
 	[SerializeField] Image fade;
-	[SerializeField] Slider loadingBar;
 	[SerializeField] float fadeTime;
 
 	private BaseScene curScene;
@@ -43,19 +42,16 @@ public class SceneManager : Singleton<SceneManager>
 		Manager.Sound.StopSFX();
 
 		Time.timeScale = 0f;
-		loadingBar.gameObject.SetActive(true);
 
 		AsyncOperation oper = UnitySceneManager.LoadSceneAsync(sceneName);
 		while (oper.isDone == false)
 		{
-			loadingBar.value = oper.progress;
 			yield return null;
 		}
 
 		BaseScene curScene = GetCurScene();
 		yield return curScene.LoadingRoutine();
 
-		loadingBar.gameObject.SetActive(false);
 		Time.timeScale = 1f;
 
 		yield return FadeIn();

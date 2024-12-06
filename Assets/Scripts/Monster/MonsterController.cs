@@ -13,10 +13,18 @@ public class MonsterController : MonoBehaviour, IDamageable
 	[SerializeField] float moveSpeed;
 	[SerializeField] float reachDistance;
 	[SerializeField] int currentWaypointIndex;
+	private bool isLastMonster;
+	public bool IsLastMonster { get { return isLastMonster; } set { isLastMonster = value; } }
+	private bool isDead;
 
 	private void Start()
 	{
 		wayPoints = Manager.Game.WayPoints;
+	}
+
+	private void OnEnable()
+	{
+		isDead = false;
 	}
 
 	private void Update()
@@ -35,7 +43,7 @@ public class MonsterController : MonoBehaviour, IDamageable
 				transform.rotation = Quaternion.Euler(0, 180, 0);
 			}
 		}
-		else 
+		else
 		{
 			if (direction.y > 0)
 			{
@@ -60,12 +68,27 @@ public class MonsterController : MonoBehaviour, IDamageable
 		}
 	}
 
-	public void TakeDamage(float damege)
+	public void TakeDamage(float damage)
 	{
-		monsterData.CurrentHealth -= damege;
-		if(monsterData.CurrentHealth <= 0)
+		if (isDead)
 		{
-			Die();
+			return;
+		}
+
+		monsterData.CurrentHealth -= damage;
+
+		if (monsterData.CurrentHealth <= 0)
+		{
+			isDead = true;
+
+			if (isLastMonster)
+			{
+				LastDie();
+			}
+			else
+			{
+				Die();
+			}
 		}
 	}
 
@@ -75,6 +98,13 @@ public class MonsterController : MonoBehaviour, IDamageable
 		currentWaypointIndex = 0;
 		monsterData.CurrentHealth = monsterData.MaxHealth;
 		Manager.Data.CurrentMonsterCount--;
+	}
+
+	private void LastDie()
+	{
+		pooledObject.Pool.ReturnPool(pooledObject);
+		Time.timeScale = 0f;
+		Manager.UI.VictoryUI.gameObject.SetActive(true);
 	}
 
 	public void Initialize(float maxHealth)

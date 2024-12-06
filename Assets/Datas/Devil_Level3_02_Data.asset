@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: Devil_Level3_02_Data
   m_EditorClassIdentifier: 
   towerName: Devil_Level3_02
-  damage: 14
+  damage: 14.5
   range: 3
   attackRate: 0.7
   attackCoolTime: 0
-  sellCost: 120

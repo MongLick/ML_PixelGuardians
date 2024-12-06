@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : Singleton<GameManager>
 {
+	[Header("UnityAction")]
+	private UnityAction onLastMonsterSpawned;
+	public UnityAction OnLastMonsterSpawned { get { return onLastMonsterSpawned; } set { onLastMonsterSpawned = value; } }
+
 	[Header("Components")]
 	[SerializeField] Transform[] wayPoints;
 	public Transform[] WayPoints { get { return wayPoints; } set { wayPoints = value; } }
@@ -15,16 +19,18 @@ public class GameManager : Singleton<GameManager>
 	public PooledObject TowerPrefab { get { return towerPrefab; } set { towerPrefab = value; } }
 	[SerializeField] List<Sprite> monsterSprites;
 	[SerializeField] int[] monsterHealth;
+	private Coroutine spawnMonsterCoroutine;
 
 	[Header("Specs")]
-	private const int stagegold = 300;
+	private const int lastStageNumber = 10;
+	private const int stageGold = 300;
 	[SerializeField] float spawnDelay;
 	[SerializeField] int monsterCount;
 	[SerializeField] int currentMonsterCount;
 
 	public void StartGame()
 	{
-		Manager.Pool.CreatePool(monsterPrefab, 15, 30);
+		Manager.Pool.CreatePool(monsterPrefab, 25, 30);
 		Manager.Pool.CreatePool(towerPrefab, 10, 25);
 		StartWave();
 	}
@@ -32,12 +38,20 @@ public class GameManager : Singleton<GameManager>
 	public void StartWave()
 	{
 		ChangeMonster();
-		StartCoroutine(SpawnMonster());
+
+		if (Manager.Data.StageNumber == lastStageNumber)
+		{
+			spawnMonsterCoroutine = StartCoroutine(LastSpawnMonster());
+		}
+		else
+		{
+			spawnMonsterCoroutine = StartCoroutine(SpawnMonster());
+		}
 	}
 
 	private void ChangeMonster()
 	{
-		monsterPrefab.Render.sprite = monsterSprites[Manager.Data.StageNumber -1];
+		monsterPrefab.Render.sprite = monsterSprites[Manager.Data.StageNumber - 1];
 	}
 
 	public void ChangeTileColors(Color color)
@@ -57,9 +71,17 @@ public class GameManager : Singleton<GameManager>
 		}
 	}
 
+	public void GameOver()
+	{
+		StopCoroutine(spawnMonsterCoroutine);
+		Time.timeScale = 0f;
+		Manager.UI.DefeatUI.gameObject.SetActive(true);
+	}
+
 	private IEnumerator SpawnMonster()
 	{
-        currentMonsterCount = monsterCount;
+		yield return new WaitForSeconds(3f);
+		currentMonsterCount = monsterCount;
 		while (currentMonsterCount > 0)
 		{
 			currentMonsterCount--;
@@ -69,15 +91,31 @@ public class GameManager : Singleton<GameManager>
 			MonsterController monster = monsterObject.GetComponent<MonsterController>();
 			if (monster != null)
 			{
-				monster.Initialize(monsterHealth[Manager.Data.StageNumber -1]);
+				monster.Initialize(monsterHealth[Manager.Data.StageNumber - 1]);
 			}
-
+			if (Manager.Data.CurrentMonsterCount >= Manager.Data.MaxMonsterCount)
+			{
+				GameOver();
+			}
 			yield return new WaitForSeconds(spawnDelay);
 		}
 
-		yield return new WaitForSeconds(3f);
 		Manager.Data.StageNumber++;
-		Manager.Data.Gold += stagegold;
+		Manager.Data.Gold += stageGold;
 		StartWave();
+	}
+
+	private IEnumerator LastSpawnMonster()
+	{
+		PooledObject monsterObject = Manager.Pool.GetPool(monsterPrefab, wayPoints[0].position, Quaternion.identity);
+		MonsterController monster = monsterObject.GetComponent<MonsterController>();
+		if (monster != null)
+		{
+			monster.Initialize(monsterHealth[Manager.Data.StageNumber - 1]);
+			monster.transform.localScale *= 1.5f;
+			monster.IsLastMonster = true;
+			onLastMonsterSpawned.Invoke();
+		}
+		yield return null;
 	}
 }

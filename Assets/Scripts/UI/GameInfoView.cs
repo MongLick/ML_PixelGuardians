@@ -15,6 +15,7 @@ public class GameInfoView : MonoBehaviour
 		Manager.Data.OnGoldChanged += UpdateGoldText;
 		Manager.Data.OnStageNumberChanged += UpdateStageText;
 		Manager.Data.OnMonsterCountChanged += UpdateMonsterCountText;
+		Manager.Game.OnLastMonsterSpawned += UpdateLastMonsterTimeText;
 	}
 
 	private void OnDisable()
@@ -22,6 +23,7 @@ public class GameInfoView : MonoBehaviour
 		Manager.Data.OnGoldChanged -= UpdateGoldText;
 		Manager.Data.OnStageNumberChanged -= UpdateStageText;
 		Manager.Data.OnMonsterCountChanged -= UpdateMonsterCountText;
+		Manager.Game.OnLastMonsterSpawned -= UpdateLastMonsterTimeText;
 	}
 
 	private void UpdateGoldText()
@@ -37,5 +39,31 @@ public class GameInfoView : MonoBehaviour
 	private void UpdateMonsterCountText()
 	{
 		monsterCountText.text = $"{Manager.Data.CurrentMonsterCount} / {Manager.Data.MaxMonsterCount}";
+	}
+
+	private void UpdateLastMonsterTimeText()
+	{
+		Manager.Data.OnMonsterCountChanged -= UpdateMonsterCountText;
+		StartCoroutine(StartCountdown(60));
+	}
+
+	private IEnumerator StartCountdown(float time)
+	{
+		float timeRemaining = time;
+
+		while (timeRemaining > 0)
+		{
+			timeRemaining -= Time.deltaTime;
+
+			int minutes = Mathf.FloorToInt(timeRemaining / 60);
+			int seconds = Mathf.FloorToInt(timeRemaining % 60);
+
+			monsterCountText.text = $"Time\n<color=red>{minutes:00}:{seconds:00}</color>";
+
+			yield return null;
+		}
+
+		monsterCountText.text = "Time\n<color=red>00:00</color>";
+		Manager.Game.GameOver();
 	}
 }

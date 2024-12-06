@@ -8,4 +8,9 @@ public class GameInfoUI : MonoBehaviour
 	[Header("Components")]
 	[SerializeField] Button missionButton;
 	[SerializeField] Button settingButton;
+
+	private void Awake()
+	{
+		Manager.UI.GameInfoUI = this;
+	}
 }
