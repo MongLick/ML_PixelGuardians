@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -5,10 +6,13 @@ using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
 
 public class SceneManager : Singleton<SceneManager>
 {
+	[Header("Components")]
 	[SerializeField] Image fade;
-	[SerializeField] float fadeTime;
-
 	private BaseScene curScene;
+
+	[Header("Specs")]
+	[SerializeField] float fadeTime;
+	internal static Action<UnityEngine.SceneManagement.Scene, UnityEngine.SceneManagement.LoadSceneMode> sceneLoaded;
 
 	public BaseScene GetCurScene()
 	{
@@ -31,6 +35,16 @@ public class SceneManager : Singleton<SceneManager>
 	public void LoadScene(string sceneName)
 	{
 		StartCoroutine(LoadingRoutine(sceneName));
+	}
+
+	public void PlayerDieFadeOut()
+	{
+		StartCoroutine(FadeOut());
+	}
+
+	public void PlayerDieFadeIn()
+	{
+		StartCoroutine(FadeIn());
 	}
 
 	IEnumerator LoadingRoutine(string sceneName)
@@ -58,15 +72,6 @@ public class SceneManager : Singleton<SceneManager>
 		fade.gameObject.SetActive(false);
 	}
 
-	public void PlayerDieFadeOut()
-	{
-		StartCoroutine(FadeOut());
-	}
-
-	public void PlayerDieFadeIn()
-	{
-		StartCoroutine(FadeIn());
-	}
 
 	IEnumerator FadeOut()
 	{

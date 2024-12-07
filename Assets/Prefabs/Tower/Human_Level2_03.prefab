@@ -3101,6 +3101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 966d8a09ae010e94a8010c7f94a289e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackParticleEffect: {fileID: 6523699520211762466, guid: 0edef91621bb6b34384ccc9dbb98729c, type: 3}
   hitColliders: []
   animator: {fileID: 8035684500707398673}
   towerData: {fileID: 11400000, guid: e272abce2cc21d24d8cee80773d00086, type: 2}
@@ -3108,9 +3109,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   type: 1
+  towerType: 
   damage: 0
   attackRate: 0
   attackCoolTime: 0
+  level: 2
 --- !u!1 &8107423946082638283
 GameObject:
   m_ObjectHideFlags: 0

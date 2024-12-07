@@ -16,7 +16,7 @@ public class TowerUI : MonoBehaviour
 	[SerializeField] Color spawnTileColor;
 	[SerializeField] Color mergeTileColor;
 
-	[Header("Specs")]
+	[Header("ButtonAction")]
 	private ButtonAction currentAction;
 
 	private void Awake()
@@ -30,6 +30,8 @@ public class TowerUI : MonoBehaviour
 
 	private void HandleButtonClick(ButtonAction action)
 	{
+		Manager.Sound.UIPlaySFX();
+
 		if (currentAction == action)
 		{
 			ResetButtonAndTileColors();
@@ -38,7 +40,6 @@ public class TowerUI : MonoBehaviour
 
 		ResetButtonAndTileColors();
 		currentAction = action;
-
 		switch (action)
 		{
 			case ButtonAction.Sell:

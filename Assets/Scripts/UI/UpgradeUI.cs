@@ -23,6 +23,8 @@ public class UpgradeUI : MonoBehaviour
 
 	private void HandleButtonClick(ButtonAction action)
 	{
+		Manager.Sound.UIPlaySFX();
+
 		switch (action)
 		{
 			case ButtonAction.DevilDamage:

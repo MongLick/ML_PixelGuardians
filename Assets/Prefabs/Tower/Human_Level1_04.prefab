@@ -3417,7 +3417,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7514911836844819832}
-  m_LocalRotation: {x: -0, y: 0.008726557, z: -0, w: 0.9999619}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3442,6 +3442,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 966d8a09ae010e94a8010c7f94a289e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackParticleEffect: {fileID: 3891973445508218817, guid: e190bf97c041e58448af6b043116cba0, type: 3}
   hitColliders: []
   animator: {fileID: 8349237645470806144}
   towerData: {fileID: 11400000, guid: f8b6c275f10b0c54f83bef05350de923, type: 2}
@@ -3449,9 +3450,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   type: 1
+  towerType: 
   damage: 0
   attackRate: 0
   attackCoolTime: 0
+  level: 1
 --- !u!1 &7570494680615552143
 GameObject:
   m_ObjectHideFlags: 0

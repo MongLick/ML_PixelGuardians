@@ -18,7 +18,7 @@ MonoBehaviour:
   humanAttackSpeed: 0
   towerDamage: 1.5
   towerSpeed: 0.1
-  gold: 400
+  gold: 500
   stageNumber: 1
   currentMonsterCount: 0
   maxMonsterCount: 30

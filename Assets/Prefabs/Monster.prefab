@@ -390,8 +390,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   render: {fileID: 4087806960244719838}
-  autoRelease: 0
   releaseTime: 0
+  autoRelease: 0
 --- !u!65 &-3125006918948762397
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -3,13 +3,15 @@ using UnityEngine;
 
 public class PooledObject : MonoBehaviour
 {
+	[Header("Components")]
 	[SerializeField] SpriteRenderer render;
 	public SpriteRenderer Render { get { return render; } set { render = value; } }
-	[SerializeField] bool autoRelease;
-	[SerializeField] float releaseTime;
-
 	private ObjectPool pool;
 	public ObjectPool Pool { get { return pool; } set { pool = value; } }
+
+	[Header("Specs")]
+	[SerializeField] float releaseTime;
+	[SerializeField] bool autoRelease;
 
 	private void OnEnable()
 	{
@@ -17,12 +19,6 @@ public class PooledObject : MonoBehaviour
 		{
 			StartCoroutine(ReleaseRoutine());
 		}
-	}
-
-	IEnumerator ReleaseRoutine()
-	{
-		yield return new WaitForSeconds(releaseTime);
-		Release();
 	}
 
 	public void Release()
@@ -35,5 +31,11 @@ public class PooledObject : MonoBehaviour
 		{
 			Destroy(gameObject);
 		}
+	}
+
+	IEnumerator ReleaseRoutine()
+	{
+		yield return new WaitForSeconds(releaseTime);
+		Release();
 	}
 }

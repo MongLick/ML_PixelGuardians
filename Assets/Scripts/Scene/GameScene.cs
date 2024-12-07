@@ -10,6 +10,7 @@ public class GameScene : BaseScene
 	private void OnEnable()
 	{
 		GameManagerSetUp();
+		Manager.Sound.PlayBGM(Manager.Sound.GameClip);
 	}
 
 	private void GameManagerSetUp()

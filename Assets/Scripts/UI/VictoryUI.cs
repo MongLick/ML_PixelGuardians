@@ -15,6 +15,7 @@ public class VictoryUI : MonoBehaviour
 
 	private void GameEnd()
 	{
+		Manager.Sound.UIPlaySFX();
 		Time.timeScale = 1f;
 		Manager.Scene.LoadScene("TitleScene");
 	}

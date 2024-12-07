@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -64,6 +63,8 @@ public class GameInfoView : MonoBehaviour
 		}
 
 		monsterCountText.text = "Time\n<color=red>00:00</color>";
+		Manager.UI.DefeatUI.gameObject.SetActive(true);
 		Manager.Game.GameOver();
+		Time.timeScale = 0f;
 	}
 }

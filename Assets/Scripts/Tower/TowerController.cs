@@ -2,23 +2,26 @@ using UnityEngine;
 
 public class TowerController : MonoBehaviour
 {
-	private enum TowerType { Devil, Human}
+	private enum TowerType { Devil, Human }
 
 	[Header("Components")]
 	[SerializeField] Collider[] hitColliders;
-	[SerializeField] Animator animator;
 	[SerializeField] TowerData towerData;
 	public TowerData TowerData { get { return towerData; } }
+	[SerializeField] Animator animator;
 	[SerializeField] LayerMask monsterLayer;
 	[SerializeField] TowerType type;
 
 	[Header("Specs")]
+	[SerializeField] string towerType;
 	[SerializeField] float damage;
 	[SerializeField] float attackRate;
 	[SerializeField] float attackCoolTime;
+	[SerializeField] int level;
 
 	private void Awake()
 	{
+		towerType = type.ToString();
 		UpdateTowerData();
 		attackCoolTime = towerData.attackCoolTime;
 	}
@@ -68,14 +71,33 @@ public class TowerController : MonoBehaviour
 
 	private void Attack()
 	{
-		RotateTowardsTarget(hitColliders[0].transform);
+		Transform targetMonster = hitColliders[0].transform;
+
+		RotateTowardsTarget(targetMonster);
 
 		animator.SetTrigger("Attack");
+
+		int particleIndex = -1;
+
+		if (type == TowerType.Devil)
+		{
+			particleIndex = level - 1;
+		}
+		else if (type == TowerType.Human)
+		{
+			particleIndex = level + 2;
+		}
+
+		Manager.Game.GetEffectFromPool(particleIndex, targetMonster.position, Quaternion.identity);
+
+		Manager.Sound.PlayTowerAttackSound(towerType, level);
+
 		IDamageable damageable = hitColliders[0].GetComponent<IDamageable>();
 		if (damageable != null)
 		{
 			damageable.TakeDamage(damage);
 		}
+
 		attackCoolTime = attackRate;
 	}
 

@@ -48,6 +48,13 @@ MonoBehaviour:
   towerTile: []
   monsterPrefab: {fileID: 6103658546729267329, guid: dd47f49dcdd658d42bf465fbba8969f8, type: 3}
   towerPrefab: {fileID: 5212764781495264361, guid: e44032918318fdb4b95414348660e67e, type: 3}
+  particlePrefabs:
+  - {fileID: 4546078219907230029, guid: 5b9d248d04858e34ca7ccd1d96a82694, type: 3}
+  - {fileID: 356127339585390575, guid: aceb11c835bb9da43b789f1c5c72d761, type: 3}
+  - {fileID: 6287559573486869026, guid: 80390f81a36084d4fb3760591ed10730, type: 3}
+  - {fileID: 525405350674635009, guid: 0d42b46d782db5b4dbaf552cd245d5b3, type: 3}
+  - {fileID: 5316089991478978425, guid: 3acf3fbb0affc3e4995cfcfce4314c60, type: 3}
+  - {fileID: 4717054052660458394, guid: e34ef6c5742c5ab4a9dc3b58003cf2d8, type: 3}
   monsterSprites:
   - {fileID: 21300000, guid: f4ba7a5e8b25ae241a6c94d4d6df858d, type: 3}
   - {fileID: 21300000, guid: 932ce8ce7b8fd8e4d9fb9bce6a7e0b7d, type: 3}
@@ -59,7 +66,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 6de610ccbbc0a094b804153e2dea43a6, type: 3}
   - {fileID: 21300000, guid: 96481b76a6fa9c6428e4e4b1522e9378, type: 3}
   - {fileID: 21300000, guid: d78e009f5bb799b42bbf3c801af824ac, type: 3}
-  monsterHealth: 0a000000140000001e00000028000000320000003c00000046000000500000005a00000064000000
+  monsterHealth: 0a000000140000001e00000028000000320000003c00000046000000500000005a000000c4090000
   spawnDelay: 1
   monsterCount: 25
   currentMonsterCount: 0

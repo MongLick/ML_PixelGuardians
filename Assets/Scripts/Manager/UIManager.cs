@@ -13,6 +13,12 @@ public class UIManager : Singleton<UIManager>
 	public VictoryUI VictoryUI { get { return victoryUI; } set { victoryUI = value; } }
 	[SerializeField] DefeatUI defeatUI;
 	public DefeatUI DefeatUI { get { return defeatUI; } set { defeatUI = value; } }
+	[SerializeField] TowerPrefabUI towerPrefabUI;
+	public TowerPrefabUI TowerPrefabUI { get {return towerPrefabUI; } set {towerPrefabUI = value; } }
+	[SerializeField] PauseUI pauseUI;
+	public PauseUI PauseUI { get { return pauseUI; } set { pauseUI = value; } }
+	[SerializeField] SoundUI soundUI;
+	public SoundUI SoundUI { get { return soundUI; } set { soundUI = value; } }
 
 	[Header("Specs")]
 	private bool isSellTower;

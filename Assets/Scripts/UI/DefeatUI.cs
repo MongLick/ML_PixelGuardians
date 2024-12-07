@@ -15,6 +15,7 @@ public class DefeatUI : MonoBehaviour
 
 	private void GameEnd()
 	{
+		Manager.Sound.UIPlaySFX();
 		Time.timeScale = 1f;
 		gameObject.SetActive(false);
 		Manager.Scene.LoadScene("TitleScene");

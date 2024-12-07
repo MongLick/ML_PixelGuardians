@@ -3,8 +3,8 @@ using UnityEngine;
 public class TowerSpawner : MonoBehaviour
 {
 	[Header("Components")]
-	[SerializeField] GameObject[] levelOneTowers; 
-	[SerializeField] GameObject[] levelTwoTowers; 
+	[SerializeField] GameObject[] levelOneTowers;
+	[SerializeField] GameObject[] levelTwoTowers;
 	[SerializeField] GameObject[] levelThreeTowers;
 
 	[Header("Specs")]
@@ -39,6 +39,8 @@ public class TowerSpawner : MonoBehaviour
 				break;
 		}
 
+		towerPrefab.transform.rotation = Quaternion.identity;
+
 		if (towerPrefab != null)
 		{
 			PooledObject towerPoolObject = Manager.Pool.GetPool(Manager.Game.TowerPrefab, tileTransform.position, Quaternion.identity);
@@ -47,7 +49,7 @@ public class TowerSpawner : MonoBehaviour
 
 			if (tower != null)
 			{
-				tower.AddOrActivateTower(towerPrefab, tileTransform); 
+				tower.AddOrActivateTower(towerPrefab, tileTransform);
 			}
 
 			TowerTile towerTile = tileTransform.GetComponent<TowerTile>();
@@ -100,9 +102,9 @@ public class TowerSpawner : MonoBehaviour
 	private int GetNextLevel(string towerName)
 	{
 		if (towerName.Contains("_Level1"))
-			return 2; 
+			return 2;
 		if (towerName.Contains("_Level2"))
-			return 3; 
+			return 3;
 		return 0;
 	}
 }

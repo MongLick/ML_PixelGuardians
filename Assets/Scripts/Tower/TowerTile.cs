@@ -12,10 +12,10 @@ public class TowerTile : MonoBehaviour, IPointerClickHandler
 	[SerializeField] Camera mainCamera;
 
 	[Header("Specs")]
-	private const int BaseSellCost = 50;
-	private const int SellCostPerLevel = 30;
 	private Ray ray;
 	private RaycastHit hit;
+	private const int BaseSellCost = 50;
+	private const int SellCostPerLevel = 30;
 	private string towerName;
 	public string TowerName { get { return towerName; } set { towerName = value; } }
 	private bool isTowerPresent;

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +13,7 @@ public class TitleSceneUI : MonoBehaviour
 
 	private void GameStart()
 	{
+		Manager.Sound.UIPlaySFX();
 		Manager.Scene.LoadScene("GameScene");
 	}
 }

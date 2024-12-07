@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,11 +5,11 @@ public class Tower : MonoBehaviour
 {
 	[Header("Components")]
 	[SerializeField] PooledObject pooledObject;
-    [SerializeField] List<GameObject> towerPrefabs = new List<GameObject>();
+	[SerializeField] List<GameObject> towerPrefabs = new List<GameObject>();
 	public List<GameObject> TowerPrefabs { get { return towerPrefabs; } }
 
-    public void ReturnTower()
-    {
+	public void ReturnTower()
+	{
 		foreach (GameObject tower in towerPrefabs)
 		{
 			tower.SetActive(false);
